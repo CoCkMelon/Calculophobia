@@ -5,9 +5,9 @@ A visual novel about scary calculators.
 
 # Compiling
 on Linux
-
-  run *./compile* script in shell
-  
+```
+./compile
+```
   
 on Windows
 
