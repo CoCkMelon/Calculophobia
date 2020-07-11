@@ -1,3 +1,3 @@
 #!/bin/sh
 
-./VKexample --reload_shaders
+./Calculophobia --reload_shaders
