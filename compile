@@ -1,3 +1,4 @@
 cd $(dirname $0)/vnka
 ./compile
-cp vnka/Calculophobia .
+./shaders/buildshaders.sh
+cp Calculophobia ..
