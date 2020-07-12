@@ -1,3 +1,0 @@
-/home/kitty/Downloads/vulkan-shader-launcher/vnka/build/CMakeFiles/rebuild_cache.dir
-/home/kitty/Downloads/vulkan-shader-launcher/vnka/build/CMakeFiles/edit_cache.dir
-/home/kitty/Downloads/vulkan-shader-launcher/vnka/build/CMakeFiles/Vkexample_img.dir

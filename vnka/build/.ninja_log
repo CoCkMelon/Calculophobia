@@ -1,5 +1,0 @@
-# ninja log v5
-1	282	1594485441730669463	CMakeFiles/Vkexample_img.dir/home/kitty/Downloads/vulkan-shader-launcher/vk_utils/vk_error_print.c.o	8c5a14afd83abcc3
-0	992	1594485442447336124	CMakeFiles/Vkexample_img.dir/home/kitty/Downloads/vulkan-shader-launcher/vk_utils/vk_utils.c.o	ca7f3c7e1a717b25
-283	1009	1594485442470669458	CMakeFiles/Vkexample_img.dir/home/kitty/Downloads/vulkan-shader-launcher/vk_utils/vk_render_helper.c.o	cd57565861379e11
-0	7974	1594485449434002741	CMakeFiles/Vkexample_img.dir/main.c.o	d13bf708f5f40743
