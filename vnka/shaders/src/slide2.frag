@@ -46,8 +46,8 @@ float triw(float f)
 
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
-	vec2 uv = fragCoord/iResolution.xy+vec2(0.5,0.5);
-	vec3 col = vec3(dot(uv,uv),triw(iTime),0.2);
+	vec2 uv = fragCoord/iResolution.xy;
+	vec3 col = vec3(texture(iChannel0,uv)+texture(iChannel1,uv+vec2(sin(iTime),abs(sin(iMouse.y)))));
 	fragColor = vec4(col,1.0);
 }
 

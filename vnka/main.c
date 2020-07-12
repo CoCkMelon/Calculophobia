@@ -22,6 +22,9 @@
 #define STBI_NO_THREAD_LOCALS
 #include "stb_image.h"
 
+//number of images(>0)
+//names textures/<X>.png X start from 1
+#define IMAGE_TEXTURES 2
 
 struct shaders_uniforms { //same to shadertoy
 	float iMouse[4];//iMouse.xy updated always
@@ -59,7 +62,7 @@ struct render_data {
 
 	struct shaders_uniforms push_constants;
 
-	struct vk_image images[2];
+	struct vk_image images[IMAGE_TEXTURES];
 	struct vk_buffer buffers[2];
 	struct vk_shader shaders[2];
 	struct vk_graphics_buffers *main_gbuffers;
@@ -76,29 +79,31 @@ struct render_data {
 struct visual_novel {
 	int slide;
 	unsigned char sound;
-/*	//TODO generate a shader path string from slide number
-	char sdir[12];
-	char sname[5];
-	char slstr[4];
-	char sext[9];
-	char spath[26];
-*/
+	/*	//TODO generate a shader path string from slide number
+		char sdir[12];
+		char sname[5];
+		char slstr[4];
+		char sext[9];
+		char spath[26];
+	*/
 	char slidenames[4][30];
 	char sounds[4][30];
-}vn = {
+} vn = {
 	0,
 	1,
-/*
-	"shaders/spv/",
-	"slide",
-	"0",
-	".frag.spv",
-	"shaders/spv/slide0.frag.spv
-*/
-	{"shaders/spv/slide0.frag.spv",
-	"shaders/spv/slide1.frag.spv",
-	"shaders/spv/slide2.frag.spv",
-	"shaders/spv/slide3.frag.spv",},
+	/*
+		"shaders/spv/",
+		"slide",
+		"0",
+		".frag.spv",
+		"shaders/spv/slide0.frag.spv
+	*/
+	{
+		"shaders/spv/slide0.frag.spv",
+		"shaders/spv/slide1.frag.spv",
+		"shaders/spv/slide2.frag.spv",
+		"shaders/spv/slide3.frag.spv",
+	},
 	{"sounds/Astronomia.wav"}
 };
 
@@ -218,15 +223,85 @@ static vk_error allocate_render_data(struct vk_physical_device *phy_dev, struct 
 		if (!vk_error_is_success(&retval))
 			return retval;
 
-		retval = init_texture(phy_dev, dev, essentials, &render_data->images[IMAGE_TEXTURE1], "textures/1.jpg");
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[0], "textures/kameshki.png");
 
 		if (!vk_error_is_success(&retval))
 			return retval;
 
-		retval = init_texture(phy_dev, dev, essentials, &render_data->images[IMAGE_TEXTURE2], "textures/2.png");
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[1], "textures/2.png");
+
+		/*
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[2], "textures/2.png");
 
 		if (!vk_error_is_success(&retval))
 			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[4], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[5], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[6], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[7], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[8], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[9], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[10], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[11], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[12], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[13], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[14], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[15], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[16], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[17], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[18], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[19], "textures/2.png");
+
+		if (!vk_error_is_success(&retval))
+			return retval;
+	*/
 	}
 
 	if((!load_once)||(reload_shaders)) {
@@ -357,37 +432,26 @@ static vk_error allocate_render_data(struct vk_physical_device *phy_dev, struct 
 
 
 	/* image uniforms */
-	VkDescriptorImageInfo set_write_image_info[2] = {
-		[0] = {
-			.sampler = render_data->images[IMAGE_TEXTURE1].sampler,
-			.imageView = render_data->images[IMAGE_TEXTURE1].view,
+	VkDescriptorImageInfo set_write_image_info[IMAGE_TEXTURES];
+	VkWriteDescriptorSet set_write[IMAGE_TEXTURES];
+
+	for(uint32_t i=0; i<IMAGE_TEXTURES; i++) {
+		set_write_image_info[i]=(VkDescriptorImageInfo) {
+			.sampler = render_data->images[i].sampler,
+			.imageView = render_data->images[i].view,
 			.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-		},
-		[1] = {
-			.sampler = render_data->images[IMAGE_TEXTURE2].sampler,
-			.imageView = render_data->images[IMAGE_TEXTURE2].view,
-			.imageLayout = VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL,
-		},
-	};
-	VkWriteDescriptorSet set_write[2] = {
-		[0] = {
+		};
+		set_write[i]=(VkWriteDescriptorSet) {
 			.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
 			.dstSet = render_data->main_desc_set,
-			.dstBinding = 0,
+			.dstBinding = i,
 			.descriptorCount = 1,
 			.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			.pImageInfo = &set_write_image_info[0],
-		},
-		[1] = {
-			.sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET,
-			.dstSet = render_data->main_desc_set,
-			.dstBinding = 1,
-			.descriptorCount = 1,
-			.descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER,
-			.pImageInfo = &set_write_image_info[1],
-		},
-	};
-	vkUpdateDescriptorSets(dev->device, 2, set_write, 0, NULL);
+			.pImageInfo = &set_write_image_info[i],
+		};
+	}
+
+	vkUpdateDescriptorSets(dev->device, IMAGE_TEXTURES, set_write, 0, NULL);
 
 
 	load_once=true;
@@ -588,22 +652,22 @@ static bool render_loop_draw(struct vk_physical_device *phy_dev, struct vk_devic
 
 	render_data.push_constants = (struct shaders_uniforms) {
 		.iResolution[0]=os_window->app_data.iResolution[0],
-		.iResolution[1]=os_window->app_data.iResolution[1],
-		.iTime=os_window->app_data.iTime,
-		.iTimeDelta=os_window->app_data.iTimeDelta,
-		.iFrame=os_window->app_data.iFrame,
-		.iMouse[0]=os_window->app_data.iMouse[0],
-		.iMouse[1]=os_window->app_data.iMouse[1],
-		.iMouse[2]=os_window->app_data.iMouse_lclick[0],
-		.iMouse[3]=os_window->app_data.iMouse_lclick[1],
-		.iMouse_lr[0]=(int)os_window->app_data.iMouse_click[0],
-		.iMouse_lr[1]=(int)os_window->app_data.iMouse_click[1],
-		.iDate[0]=my_time.year,
-		.iDate[1]=my_time.month,
-		.iDate[2]=my_time.day,
-		.iDate[3]=day_sec,
-		.debugdraw=(int)os_window->app_data.drawdebug,
-		.pause=(int)os_window->app_data.pause,
+						.iResolution[1]=os_window->app_data.iResolution[1],
+										.iTime=os_window->app_data.iTime,
+										.iTimeDelta=os_window->app_data.iTimeDelta,
+										.iFrame=os_window->app_data.iFrame,
+										.iMouse[0]=os_window->app_data.iMouse[0],
+												.iMouse[1]=os_window->app_data.iMouse[1],
+														.iMouse[2]=os_window->app_data.iMouse_lclick[0],
+																.iMouse[3]=os_window->app_data.iMouse_lclick[1],
+																		.iMouse_lr[0]=(int)os_window->app_data.iMouse_click[0],
+																				.iMouse_lr[1]=(int)os_window->app_data.iMouse_click[1],
+																						.iDate[0]=my_time.year,
+																								.iDate[1]=my_time.month,
+																										.iDate[2]=my_time.day,
+																												.iDate[3]=day_sec,
+																														.debugdraw=(int)os_window->app_data.drawdebug,
+																														.pause=(int)os_window->app_data.pause,
 	};
 
 	vkCmdPushConstants(essentials.cmd_buffer, render_data.main_layout.pipeline_layout, VK_SHADER_STAGE_FRAGMENT_BIT, 0,
@@ -619,6 +683,7 @@ static bool render_loop_draw(struct vk_physical_device *phy_dev, struct vk_devic
 	if (res == VK_ERROR_OUT_OF_DATE_KHR) {
 		os_window->resize_event=true;
 		res = 0;
+
 	} else if (res == VK_ERROR_SURFACE_LOST_KHR) {
 		vkDestroySurfaceKHR(vk, swapchain->surface, NULL);
 		VkResult tres;
@@ -669,45 +734,45 @@ void init_win_params(struct app_os_window *os_window)
 
 void novel_init()
 {
-    /* Initialize only SDL Audio on default device */
-    if(SDL_Init(SDL_INIT_AUDIO) < 0)
-    {
-	printf("filed to initialize audio\n");
-        vn.sound=0;
-	return; 
-    }
+	/* Initialize only SDL Audio on default device */
+	if(SDL_Init(SDL_INIT_AUDIO) < 0) {
+		printf("filed to initialize audio\n");
+		vn.sound=0;
+		return;
+	}
 
-    /* Init Simple-SDL2-Audio */
-    initAudio();
+	/* Init Simple-SDL2-Audio */
+	initAudio();
 
 }
 
 void novel_cleanup()
 {
-    /* End Simple-SDL2-Audio */
-    endAudio();
+	/* End Simple-SDL2-Audio */
+	endAudio();
 
-    /* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
-    //freeAudio(sound);
-    //freeAudio(music);
+	/* Important to free audio after ending Simple-SDL2-Audio because they might be referenced still */
+	//freeAudio(sound);
+	//freeAudio(music);
 
-    SDL_Quit();
+	SDL_Quit();
 }
 
 
 unsigned char up=1;
 //A funtion for visual novel slides, routes, sound
 void novel_function(VkInstance vk, struct vk_physical_device *phy_dev, struct vk_device *dev,
-        struct vk_swapchain *swapchain, struct app_os_window *os_window, uint32_t thread_count, VkPresentModeKHR *present_modestruct)
+					struct vk_swapchain *swapchain, struct app_os_window *os_window, uint32_t thread_count, VkPresentModeKHR *present_modestruct)
 {
 	vk_error res;
-	if(os_window->app_data.iMouse_click[0]>0&&up)
-	{
+
+	if(os_window->app_data.iMouse_click[0]>0&&up) {
 		up=0;
 		vn.slide++;
-		if(vn.slide==1&&vn.sound==1){
+
+		if(vn.slide==1&&vn.sound==1) {
 			write(1,"Astr\n",5);
-    			playMusic("sounds/Astronomia.wav", 50 /*SDL_MIX_MAXVOLUME*/);
+			playMusic("sounds/Astronomia.wav", 50 /*SDL_MIX_MAXVOLUME*/);
 		}
 
 		printf("click\n%d",os_window->app_data.iMouse_click[0]);
@@ -738,7 +803,8 @@ void novel_function(VkInstance vk, struct vk_physical_device *phy_dev, struct vk
 		}
 
 		render_loop_init(phy_dev, dev, swapchain, os_window);
-	}else if(os_window->app_data.iMouse_click[0]==0&&up==0){
+
+	} else if(os_window->app_data.iMouse_click[0]==0&&up==0) {
 		up=1;
 	}
 }
@@ -779,6 +845,7 @@ static void render_loop_xcb(struct vk_physical_device *phy_dev, struct vk_device
 		if(os_window->is_minimized) { //I do not delete everything on minimize, only stop rendering
 			sleep_ms(10);
 		}
+
 		novel_function(vk, phy_dev, dev, swapchain, os_window, 1, &os_window->present_mode);
 	}
 
@@ -1044,7 +1111,7 @@ int main(int argc, char **argv)
 	render_loop_xcb(&phy_dev, &dev, &swapchain, &os_window);
 
 	retval = 0;
-	
+
 	novel_cleanup();
 	exit_cleanup(vk, &dev, &swapchain, &os_window);
 	return retval;
