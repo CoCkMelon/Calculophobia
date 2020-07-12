@@ -1,4 +1,3 @@
-rm Calculophobia
 rm vnka/Calculophobia
 rm vnka/err
-
+rm vnka/shaders/spv/*
