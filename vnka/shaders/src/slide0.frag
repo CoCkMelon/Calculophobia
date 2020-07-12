@@ -36,14 +36,14 @@ layout (location = 0) out vec4 out_color;
 void mainImage( out vec4 fragColor, in vec2 fragCoord )
 {
     vec2 uv = fragCoord/iResolution.xy;
-    vec2 ouv=uv*2.;
-    uv=fract(uv*2.);
+    //vec2 ouv=uv*2.;
+    //uv=fract(uv*2.);
     vec3 col=vec3(0.);
     //if(ouv.x<1.)
     //	col = texture(iChannel0,uv).rgb;
     //else
         col = texture(iChannel1,uv).rgb;
-	col += vec3(0.5,0.5,iTime);
+	col += vec3(sin(iTime),0.,0.);
     fragColor = vec4(col,1.0);
 }
 
@@ -51,7 +51,7 @@ void main()
 {
     vec4 uFragColor=vec4(0.);
     vec2 fragCoord=(frag_pos.xy/2.+vec2(0.5,0.5)); // 0-1 range to fit shadertoy
-    fragCoord.y=1.-fragCoord.y; // shadertoy v(y)-flip main_image
+    //fragCoord.y=1.-fragCoord.y; // shadertoy v(y)-flip main_image
     fragCoord=floor(iResolution.xy*fragCoord);
     mainImage(uFragColor,fragCoord);
     out_color=uFragColor;
