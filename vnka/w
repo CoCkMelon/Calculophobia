@@ -1,0 +1,1 @@
+clang -O2 -DVK_USE_PLATFORM_WIN32_KHR -s ../vk_utils/vk_utils.c ../vk_utils/vk_error_print.c ../vk_utils/vk_render_helper.c main.c -o Calculophobia -Wall -fdiagnostics-color=always -lm -mwindows /mingw64/lib/libvulkan.dll.a /mingw64/lib/libSDL2.dll.a
