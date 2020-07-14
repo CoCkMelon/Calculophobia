@@ -42,8 +42,8 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     //if(ouv.x<1.)
     //	col = texture(iChannel0,uv).rgb;
     //else
-        col = texture(iChannel1,uv).rgb;
-	col += vec3(sin(iTime),0.,0.);
+        col = texture(iChannel0,uv/vec2(2.,1.)+vec2(0.5,0.)).rgb;
+	//col += vec3(sin(iTime),0.,0.);
     fragColor = vec4(col,1.0);
 }
 

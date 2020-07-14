@@ -86,8 +86,8 @@ struct visual_novel {
 		char sext[9];
 		char spath[26];
 	*/
-	char slidenames[4][30];
-	char sounds[4][30];
+	char slidenames[22][30];
+	char sounds[22][30];
 } vn = {
 	0,
 	1,
@@ -103,6 +103,24 @@ struct visual_novel {
 		"shaders/spv/slide1.frag.spv",
 		"shaders/spv/slide2.frag.spv",
 		"shaders/spv/slide3.frag.spv",
+		"shaders/spv/slide4.frag.spv",
+		"shaders/spv/slide5.frag.spv",
+		"shaders/spv/slide6.frag.spv",
+		"shaders/spv/slide7.frag.spv",
+		"shaders/spv/slide8.frag.spv",
+		"shaders/spv/slide9.frag.spv",
+		"shaders/spv/slide10.frag.spv",
+		"shaders/spv/slide11.frag.spv",
+		"shaders/spv/slide12.frag.spv",
+		"shaders/spv/slide13.frag.spv",
+		"shaders/spv/slide14.frag.spv",
+		"shaders/spv/slide15.frag.spv",
+		"shaders/spv/slide16.frag.spv",
+		"shaders/spv/slide17.frag.spv",
+		"shaders/spv/slide18.frag.spv",
+		"shaders/spv/slide19.frag.spv",
+		"shaders/spv/slide20.frag.spv",
+		"shaders/spv/slide21.frag.spv",
 	},
 	{"sounds/Astronomia.wav"}
 };
@@ -223,7 +241,7 @@ static vk_error allocate_render_data(struct vk_physical_device *phy_dev, struct 
 		if (!vk_error_is_success(&retval))
 			return retval;
 
-		retval = init_texture(phy_dev, dev, essentials, &render_data->images[0], "textures/kameshki.png");
+		retval = init_texture(phy_dev, dev, essentials, &render_data->images[0], "textures/1.png");
 
 		if (!vk_error_is_success(&retval))
 			return retval;
@@ -768,11 +786,68 @@ void novel_function(VkInstance vk, struct vk_physical_device *phy_dev, struct vk
 
 	if(os_window->app_data.iMouse_click[0]>0&&up) {
 		up=0;
-		vn.slide++;
+		//on slide input
+		switch (vn.slide){
+		case 0:
+			if(os_window->app_data.iMouse[0]<os_window->app_data.iResolution[0]/2.){
+				printf("mou %d\n",os_window->app_data.iMouse[0]);
+				printf("res %d\n",os_window->app_data.iResolution[0]);
+				printf("sound enabled\n");
+				vn.sound=1;
+			}else{
+				vn.sound=0;
+				printf("sound disabled, you will loose the most of this visual novel\n");
+			}
+			vn.slide++;
+			break;
+		case 1:
+			vn.slide++;
+			break;
+		case 3:
+			if(os_window->app_data.iMouse[0]<os_window->app_data.iResolution[0]/2.){
+				printf("mou %d\n",os_window->app_data.iMouse[0]);
+				printf("res %d\n",os_window->app_data.iResolution[0]);
+				printf("sound enabled\n");
+				vn.sound=1;
+			}else{
+				vn.slide=21;
+				printf("death\n");
+			}
+			vn.slide++;
+			break;
+		case 21:
+			vn.slide=2;
+		default:
+			vn.slide++;
+		}
 
-		if(vn.slide==1&&vn.sound==1) {
-			write(1,"Astr\n",5);
-			playMusic("sounds/Astronomia.wav", 50 /*SDL_MIX_MAXVOLUME*/);
+		//on slide init
+		switch(vn.slide){
+		case 1:
+			if(vn.sound==1)
+				playSound("sounds/logo.wav", SDL_MIX_MAXVOLUME);
+			break;
+		case 2:
+			if(vn.sound==1)
+				playMusic("sounds/entered.wav", SDL_MIX_MAXVOLUME);
+			break;
+		case 3:
+			if(vn.sound==1)
+				playMusic("sounds/undertable.wav", SDL_MIX_MAXVOLUME);
+			break;
+		case 4:
+			if(vn.sound==1)
+				playMusic("sounds/talking1.wav", SDL_MIX_MAXVOLUME);
+			break;
+		case 5:
+			if(vn.sound==1)
+				playMusic("sounds/now2.wav", SDL_MIX_MAXVOLUME);
+			break;
+		case 21:
+			if(vn.sound==1) {
+				playMusic("sounds/Astronomia.wav", SDL_MIX_MAXVOLUME/2);
+			}
+			break;
 		}
 
 		printf("click\n%d",os_window->app_data.iMouse_click[0]);
