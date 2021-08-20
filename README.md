@@ -26,4 +26,3 @@ x86_64-w64-mingw32-gcc -DVK_USE_PLATFORM_WIN32_KHR -O3 -s -lm -mwindows ../vk_ut
 ```
 
 Graphical output is based on https://github.com/danilw/vulkan-shader-launcher/
-# [**Discord server**](https://discord.gg/BvfPC4c)
